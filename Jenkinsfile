@@ -1,7 +1,6 @@
 pipeline {
     agent any
 
-
     stages {
         stage('Checkout') {
             steps {
@@ -11,88 +10,67 @@ pipeline {
 
         stage('Install Deps') {
             steps {
-            
-                echo 'composer install'
+                script {
+                    // Installer les dépendances PHP avec Composer
+                    sh 'composer install'
+                }
             }
         }
         
         stage('Build Laravel') {
             steps {
-                // script {
-                //     sh 'php artisan serve &'
-                // }
-                echo 'php artisan serve &'
-            } 
-        } 
-
-        stage('installer les dépendances Node') {
-            steps {
-                // script {
-                //     sh 'npm install'
-                // }
-                echo 'npm install'
-            }
-        }
-
-        stage('compiler les assets Node') {
-            steps { 
-                // script {
-                //     sh 'npm run build'
-                // }
-                echo 'npm run build'
-            } 
-        }
-
-        // stage('SonarQube Analysis') {
-        //     steps {
-        //         withSonarQubeEnv('SonarQube') {
-        //             sh 'docker run --network=host -e SONAR_HOST_URL="http://127.0.0.1:9000" -v "$PWD:/usr/src" sonarsource/sonar-scanner-cli'
-        //         }
-        //     }
-        // }
-
-       stage('SonarQube Analysis') {
-    steps {
-        script {
-            def scannerHome = tool 'sonar-scanner'
-            withSonarQubeEnv('SonarQube') {
-                bat """
-                    "${scannerHome}\\bin\\sonar-scanner.bat" ^
-                    -Dsonar.projectKey=SonarQube ^
-                    -Dsonar.host.url=http://localhost:9000 ^
-                    -Dsonar.login=sqa_b6ada38c70dd1894c512aa16754001ada4ca5fa6 ^
-                    -Dsonar.sources=./app ^
-                    -Dsonar.exclusions="vendor/,storage/,bootstrap/cache/"
-                """
-            }
-        }
-    }
-}
-
-
-
-        stage('Quality Gate') {
-            steps {
-                timeout(time: 5, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
+                script {
+                    // Lancer le serveur Laravel (en arrière-plan)
+                    sh 'php artisan serve &'
                 }
             }
         }
 
-        // stage('Email Sent') {
-        //     steps{
-        //         sh 'swaks --to houcine.chakra10@gmail.com \
-        //             --from "chakra.hs.business@gmail.com" \
-        //             --server "smtp.gmail.com" \
-        //             --port "587" \
-        //             --auth PLAIN \
-        //             --auth-user "chakra.hs.business@gmail.com" \
-        //             --auth-password "pnuw lgzu ofkv oyoq" \
-        //             --helo "localhost" \
-        //             --tls \
-        //             --data "Subject: Sonar Subject Test\n\nSalam charaf from CLI"'
-        //     }
-        // }
+        stage('Installer les dépendances Node') {
+            steps {
+                script {
+                    // Installer les dépendances Node.js
+                    sh 'npm install'
+                }
+            }
+        }
+
+        stage('Compiler les assets Node') {
+            steps {
+                script {
+                    // Compiler les assets avec npm
+                    sh 'npm run build'
+                }
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    // Exécuter l'analyse SonarQube en utilisant le scanner
+                    def scannerHome = tool 'sonar-scanner'
+                    withSonarQubeEnv('SonarQube') {
+                        bat """
+                            "${scannerHome}\\bin\\sonar-scanner.bat" ^
+                            -Dsonar.projectKey=SonarQube ^
+                            -Dsonar.host.url=http://localhost:9000 ^
+                            -Dsonar.login=sqa_b6ada38c70dd1894c512aa16754001ada4ca5fa6 ^
+                            -Dsonar.sources=./app ^
+                            -Dsonar.exclusions="vendor/,storage/,bootstrap/cache/"
+                        """
+                    }
+                }
+            }
+        }
+
+        stage('Quality Gate') {
+            steps {
+                timeout(time: 5, unit: 'MINUTES') {
+                    // Vérifier la qualité du code
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
     }
 
     post {
@@ -111,8 +89,8 @@ pipeline {
                              <p>Cordialement,</p>
                              <p>Votre serveur Jenkins</p>""",
                     to: 'houcine.chakra10@gmail.com', // Remplacez par les adresses souhaitées
-                    from:"chakra.hs.business@gmail.com",
-                    replyTo:"chakra.hs.business@gmail.com",
+                    from: "chakra.hs.business@gmail.com",
+                    replyTo: "chakra.hs.business@gmail.com",
                     mimeType: 'text/html'
                 )
             }
@@ -129,11 +107,11 @@ pipeline {
                              <p>Cordialement,</p>
                              <p>Votre serveur Jenkins</p>""",
                     to: 'houcine.chakra10@gmail.com', // Remplacez par les adresses souhaitées
-                    from:"chakra.hs.business@gmail.com",
-                    replyTo:"chakra.hs.business@gmail.com",
+                    from: "chakra.hs.business@gmail.com",
+                    replyTo: "chakra.hs.business@gmail.com",
                     mimeType: 'text/html'
                 )
             }
-        }
-    }
+        }
+    }
 }
