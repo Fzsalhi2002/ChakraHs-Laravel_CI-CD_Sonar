@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/ChakraHs/ChakraHs-Laravel_CI-CD_Sonar.git', branch: 'main'
+                git url: 'https://github.com/Fzsalhi2002/ChakraHs-Laravel_CI-CD_Sonar.git', branch: 'main'
             }
         }
 
