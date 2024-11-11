@@ -8,12 +8,7 @@ pipeline {
             }
         }
 
-        stage('Install Deps') {
-            steps {
-                bat 'composer install'
-            }
-        }
-        
+     
         stage('Build Laravel') {
             steps {
                 bat 'php artisan serve'
