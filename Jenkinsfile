@@ -17,14 +17,14 @@ pipeline {
         //     }
         // }
         
-        stage('Build Laravel') {
-            steps {
-                script {
-                    // Lancer le serveur Laravel (en arrière-plan)
-                    sh 'php artisan serve &'
-                }
-            }
-        }
+        // stage('Build Laravel') {
+        //     steps {
+        //         script {
+        //             // Lancer le serveur Laravel (en arrière-plan)
+        //             sh 'php artisan serve &'
+        //         }
+        //     }
+        // }
 
         stage('Installer les dépendances Node') {
             steps {
