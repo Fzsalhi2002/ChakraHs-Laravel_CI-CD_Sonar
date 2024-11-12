@@ -8,14 +8,14 @@ pipeline {
             }
         }
 
-        stage('Install Deps') {
-            steps {
-                script {
-                    // Installer les dépendances PHP avec Composer
-                    sh 'composer install'
-                }
-            }
-        }
+        // stage('Install Deps') {
+        //     steps {
+        //         script {
+        //             // Installer les dépendances PHP avec Composer
+        //             sh 'composer install'
+        //         }
+        //     }
+        // }
         
         stage('Build Laravel') {
             steps {
