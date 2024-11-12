@@ -8,41 +8,41 @@ pipeline {
             }
         }
 
-        // stage('Install Deps') {
-        //     steps {
-        //         script {
-        //             // Installer les dépendances PHP avec Composer
-        //             sh 'composer install'
-        //         }
-        //     }
-        // }
+        stage('Install Deps') {
+            steps {
+                script {
+                    // Installer les dépendances PHP avec Composer
+                    sh 'composer install'
+                }
+            }
+        }
         
-        // stage('Build Laravel') {
-        //     steps {
-        //         script {
-        //             // Lancer le serveur Laravel (en arrière-plan)
-        //             sh 'php artisan serve &'
-        //         }
-        //     }
-        // }
+        stage('Build Laravel') {
+            steps {
+                script {
+                    // Lancer le serveur Laravel (en arrière-plan)
+                    sh 'php artisan serve &'
+                }
+            }
+        }
 
-        // stage('Installer les dépendances Node') {
-        //     steps {
-        //         script {
-        //             // Installer les dépendances Node.js
-        //             sh 'npm install'
-        //         }
-        //     }
-        // }
+        stage('Installer les dépendances Node') {
+            steps {
+                script {
+                    // Installer les dépendances Node.js
+                    sh 'npm install'
+                }
+            }
+        }
 
-        // stage('Compiler les assets Node') {
-        //     steps {
-        //         script {
-        //             // Compiler les assets avec npm
-        //             sh 'npm run build'
-        //         }
-        //     }
-        // }
+        stage('Compiler les assets Node') {
+            steps {
+                script {
+                    // Compiler les assets avec npm
+                    sh 'npm run build'
+                }
+            }
+        }
 
         stage('SonarQube Analysis') {
             steps {
