@@ -26,23 +26,23 @@ pipeline {
         //     }
         // }
 
-        stage('Installer les dépendances Node') {
-            steps {
-                script {
-                    // Installer les dépendances Node.js
-                    sh 'npm install'
-                }
-            }
-        }
+        // stage('Installer les dépendances Node') {
+        //     steps {
+        //         script {
+        //             // Installer les dépendances Node.js
+        //             sh 'npm install'
+        //         }
+        //     }
+        // }
 
-        stage('Compiler les assets Node') {
-            steps {
-                script {
-                    // Compiler les assets avec npm
-                    sh 'npm run build'
-                }
-            }
-        }
+        // stage('Compiler les assets Node') {
+        //     steps {
+        //         script {
+        //             // Compiler les assets avec npm
+        //             sh 'npm run build'
+        //         }
+        //     }
+        // }
 
         stage('SonarQube Analysis') {
             steps {
